@@ -33,7 +33,7 @@ class CIFARModule(LightningModule):
         self.test_acc = Accuracy()
 
         # for logging best so far validation accuracy
-        self.val_acc_best = MaxMetric()
+        # self.val_acc_best = MaxMetric()
 
     def forward(self, x: torch.Tensor):
         return self.net(x)
@@ -62,20 +62,20 @@ class CIFARModule(LightningModule):
         # `outputs` is a list of dicts returned from `training_step()`
         pass
 
-    def validation_step(self, batch: Any, batch_idx: int):
-        loss, preds, targets = self.step(batch)
+    # def validation_step(self, batch: Any, batch_idx: int):
+    #     loss, preds, targets = self.step(batch)
 
-        # log val metrics
-        acc = self.val_acc(preds, targets)
-        self.log("val/loss", loss, on_step=False, on_epoch=True, prog_bar=False)
-        self.log("val/acc", acc, on_step=False, on_epoch=True, prog_bar=True)
+    #     # log val metrics
+    #     acc = self.val_acc(preds, targets)
+    #     self.log("val/loss", loss, on_step=False, on_epoch=True, prog_bar=False)
+    #     self.log("val/acc", acc, on_step=False, on_epoch=True, prog_bar=True)
 
-        return {"loss": loss, "preds": preds, "targets": targets}
+    #     return {"loss": loss, "preds": preds, "targets": targets}
 
-    def validation_epoch_end(self, outputs: List[Any]):
-        acc = self.val_acc.compute()  # get val accuracy from current epoch
-        self.val_acc_best.update(acc)
-        self.log("val/acc_best", self.val_acc_best.compute(), on_epoch=True, prog_bar=True)
+    # def validation_epoch_end(self, outputs: List[Any]):
+    #     acc = self.val_acc.compute()  # get val accuracy from current epoch
+    #     self.val_acc_best.update(acc)
+    #     self.log("val/acc_best", self.val_acc_best.compute(), on_epoch=True, prog_bar=True)
 
     def test_step(self, batch: Any, batch_idx: int):
         loss, preds, targets = self.step(batch)
