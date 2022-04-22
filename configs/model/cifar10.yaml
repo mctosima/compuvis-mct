@@ -3,7 +3,7 @@ lr: 0.001
 weight_decay: 0.0005
 
 net:
-  _target_: src.models.components.cifar_convnet.ConvNet
+  _target_: src.models.components.cifar_convnet.ConvoNet
   # input_size: 784
   # lin1_size: 256
   # lin2_size: 256

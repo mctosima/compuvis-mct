@@ -5,7 +5,7 @@ from pytorch_lightning import LightningModule
 from torchmetrics import MaxMetric
 from torchmetrics.classification.accuracy import Accuracy
 
-from src.models.components.cifar_convnet import ConvNet
+from src.models.components.cifar_convnet import ConvoNet
 
 
 class CIFARModule(LightningModule):
@@ -98,6 +98,7 @@ class CIFARModule(LightningModule):
 
     def configure_optimizers(self):
 
-        optimz = torch.optim.SGD(self.parameters(), lr=self.hparams.lr, weight_decay=self.hparams.weight_decay)
+        optimz = torch.optim.SGD(
+            self.parameters(), lr=self.hparams.lr, weight_decay=self.hparams.weight_decay)
         
         return optimz
