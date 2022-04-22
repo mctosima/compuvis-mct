@@ -98,6 +98,8 @@ class CIFARModule(LightningModule):
 
     def configure_optimizers(self):
 
-        optimz = torch.optim.SGD(self.parameters(), lr=self.hparams.lr, weight_decay=self.hparams.weight_decay)
-        
+        optimz = torch.optim.SGD(
+            self.parameters(), lr=self.hparams.lr, weight_decay=self.hparams.weight_decay
+        )
+
         return optimz
