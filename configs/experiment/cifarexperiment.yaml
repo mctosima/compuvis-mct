@@ -25,10 +25,10 @@ trainer:
 
 model:
   lr: 0.001
-  net:
-    # lin1_size: 128
-    # lin2_size: 256
-    # lin3_size: 64
+  #net:
+  # lin1_size: 128
+  # lin2_size: 256
+  # lin3_size: 64
 
 datamodule:
   batch_size: 4
