@@ -62,20 +62,20 @@ class CIFARModule(LightningModule):
         # `outputs` is a list of dicts returned from `training_step()`
         pass
 
-    # def validation_step(self, batch: Any, batch_idx: int):
-    #     loss, preds, targets = self.step(batch)
+    def validation_step(self, batch: Any, batch_idx: int):
+        loss, preds, targets = self.step(batch)
 
-    #     # log val metrics
-    #     acc = self.val_acc(preds, targets)
-    #     self.log("val/loss", loss, on_step=False, on_epoch=True, prog_bar=False)
-    #     self.log("val/acc", acc, on_step=False, on_epoch=True, prog_bar=True)
+        # log val metrics
+        acc = self.val_acc(preds, targets)
+        self.log("val/loss", loss, on_step=False, on_epoch=True, prog_bar=False)
+        self.log("val/acc", acc, on_step=False, on_epoch=True, prog_bar=True)
 
-    #     return {"loss": loss, "preds": preds, "targets": targets}
+        return {"loss": loss, "preds": preds, "targets": targets}
 
-    # def validation_epoch_end(self, outputs: List[Any]):
-    #     acc = self.val_acc.compute()  # get val accuracy from current epoch
-    #     self.val_acc_best.update(acc)
-    #     self.log("val/acc_best", self.val_acc_best.compute(), on_epoch=True, prog_bar=True)
+    def validation_epoch_end(self, outputs: List[Any]):
+        acc = self.val_acc.compute()  # get val accuracy from current epoch
+        self.val_acc_best.update(acc)
+        self.log("val/acc_best", self.val_acc_best.compute(), on_epoch=True, prog_bar=True)
 
     def test_step(self, batch: Any, batch_idx: int):
         loss, preds, targets = self.step(batch)
@@ -94,11 +94,12 @@ class CIFARModule(LightningModule):
         # reset metrics at the end of every epoch
         self.train_acc.reset()
         self.test_acc.reset()
-        self.val_acc.reset()
+        # self.val_acc.reset()
 
     def configure_optimizers(self):
 
         optimz = torch.optim.SGD(
-            self.parameters(), lr=self.hparams.lr, weight_decay=self.hparams.weight_decay)
-        
+            self.parameters(), lr=self.hparams.lr, weight_decay=self.hparams.weight_decay
+        )
+
         return optimz

@@ -1,6 +1,7 @@
-from torch import nn
 import torch.nn.functional as F
-    
+from torch import nn
+
+
 class ConvoNet(nn.Module):
     def __init__(self):
         super().__init__()
@@ -11,8 +12,7 @@ class ConvoNet(nn.Module):
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, 10)
 
-
-    def forward(self,x):
+    def forward(self, x):
         x = F.relu(self.conv1(x))
         x = self.pool(x)
         x = F.relu(self.conv2(x))

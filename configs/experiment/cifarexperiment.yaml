@@ -19,16 +19,16 @@ name: "cifarexperiment"
 seed: 12345
 
 trainer:
-  min_epochs: 5
-  max_epochs: 5
-  gradient_clip_val: 0.5
+  min_epochs: 1
+  max_epochs: 1
+  # gradient_clip_val: 0.5
 
 model:
   lr: 0.001
   # net:
-    # lin1_size: 128
-    # lin2_size: 256
-    # lin3_size: 64
+  # lin1_size: 128
+  # lin2_size: 256
+  # lin3_size: 64
 
 datamodule:
   batch_size: 4
