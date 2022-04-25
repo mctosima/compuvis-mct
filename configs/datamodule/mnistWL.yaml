@@ -1,0 +1,5 @@
+_target_: src.datamodules.mnist_with_lightning.MNISTWL
+
+data_dir: ${data_dir} # data_dir is specified in config.yaml
+batch_size: 100
+num_workers: 4

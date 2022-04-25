@@ -1,0 +1,5 @@
+_target_: src.models.mnistWL_module.MNISTLitModule
+lr: 0.001
+
+net:
+  _target_: src.models.components.mnistWL.NeuralNetWL
