@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-
 class StandardConv(nn.Module):
     def __init__(
         self,
@@ -12,19 +11,19 @@ class StandardConv(nn.Module):
         output_size: int = 102,
     ):
         super().__init__()
-        
+
         self.conv1 = nn.Conv2d(input_size, 6, 5)
         self.pool = nn.MaxPool2d(2, 2)
         self.conv2 = nn.Conv2d(6, 16, 5)
-        
+
         _, self.channel, self.width, self.height = self.getOutputConv(
             torch.randn(1, input_size, img_size, img_size)
         )
-        
+
         self.fc1 = nn.Linear(self.channel * self.width * self.height, 120)
         self.fc2 = nn.Linear(120, output_size)
 
-        ''' Commented out for now
+        """ Commented out for now
         self.model = nn.Sequential(
             nn.Linear(input_size, lin1_size),
             nn.BatchNorm1d(lin1_size),
@@ -37,7 +36,7 @@ class StandardConv(nn.Module):
             nn.ReLU(),
             nn.Linear(lin3_size, output_size),
         )
-        '''
+        """
 
     def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
@@ -46,7 +45,7 @@ class StandardConv(nn.Module):
         x = F.relu(self.fc1(x))
         x = self.fc2(x)
         return x
-    
+
     def getOutputConv(self, x):
         with torch.no_grad():
             x = self.pool(F.relu(self.conv1(x)))

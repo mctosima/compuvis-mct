@@ -26,13 +26,12 @@ trainer:
 model:
   lr: 0.01
   net:
-    input_size: int = 3
-    img_size: int = 227
-    output_size: int = 102
+    input_size: 3
+    img_size: 227
+    output_size: 102
 
 datamodule:
   batch_size: 4
-
 # logger:
 #   wandb:
 #     tags: ["mnist", "${name}"]

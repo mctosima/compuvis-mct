@@ -1,7 +1,7 @@
 from typing import Any, List
 
-import torch
 import pytorch_lightning as pl
+import torch
 from torchmetrics import MaxMetric
 from torchmetrics.classification.accuracy import Accuracy
 
@@ -54,7 +54,7 @@ class CNNFlower102(pl.LightningModule):
     def step(self, batch: Any):
         x, y = batch
         logits = self.forward(x)
-        loss = self.criterion(logits, y-1)
+        loss = self.criterion(logits, y - 1)
         preds = torch.argmax(logits, dim=1)
         return loss, preds, y
 
