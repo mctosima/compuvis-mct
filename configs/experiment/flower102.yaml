@@ -1,0 +1,26 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /datamodule: flower102.yaml
+  - override /model: flower102.yaml
+  - override /callbacks: default.yaml
+  - override /logger: tensorboard.yaml
+  - override /trainer: default.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+# name of the run determines folder name in logs
+name: "flower102_20220427"
+
+seed: 12345
+
+trainer:
+  min_epochs: 2
+  max_epochs: 2
+
+datamodule:
+  batch_size: 4

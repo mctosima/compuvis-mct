@@ -1,0 +1,2 @@
+_target_: src.models.flower102_cnnmct.Flowers102CNNMCT
+learning_rate: 0.001

@@ -1,0 +1,6 @@
+_target_: src.datamodules.flower102_dm.Flowers102
+datadir: ${data_dir}
+
+batch_size: 4
+num_workers: 8
+pin_memory: True
