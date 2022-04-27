@@ -1,0 +1,6 @@
+_target_: src.datamodules.dm_flower102.DataModuleFlower102
+
+data_dir: ${data_dir} # data_dir is specified in config.yaml
+batch_size: 4
+num_workers: 8
+pin_memory: True

@@ -1,0 +1,9 @@
+_target_: src.models.mod_flower102.CNNFlower102
+lr: 0.01
+weight_decay: 0.0005
+
+net:
+  _target_: src.models.components.com_flower102.StandardConv
+  input_size: int = 3
+  img_size: int = 227
+  output_size: int = 102
