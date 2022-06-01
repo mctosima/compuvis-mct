@@ -4,6 +4,9 @@ import torch.optim as optim
 import torchvision.transforms as transforms
 from loader import get_loader
 from model import CNNtoRNN
+import wandb
+
+wandb.init(project="image-captioning", entity="mctosima")
 
 def train():
     
@@ -30,9 +33,7 @@ def train():
     else:
         device = torch.device('cpu')
         
-    load_models = False
-    save_model = False
-    train_CNN = False
+    print(f'Train Using {device}')
     
     # Hyperparameter
     embed_size = 256
@@ -40,7 +41,7 @@ def train():
     vocab_size = len(dataset.vocab)
     num_layers = 1
     lrate = 0.001
-    num_epochs = 100
+    num_epochs = 5
     
     # Initialize Model
     model = CNNtoRNN(embed_size, hidden_size, vocab_size, num_layers).to(device)
@@ -62,7 +63,8 @@ def train():
             
             optimizer.step()
             if idx % 100 == 0:
-                print('Epoch: {}/{}'.format(epoch, num_epochs), 'Step: {}'.format(idx), 'Loss: {}'.format(loss.item()))
+                wandb.log({"loss": loss})
+                print('Epoch: {}/{}'.format(epoch+1, num_epochs), 'Step: {}'.format(idx), 'Loss: {}'.format(loss.item()))
                 
 if __name__ == '__main__':
     train()
