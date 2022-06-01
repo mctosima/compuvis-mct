@@ -18,9 +18,10 @@ def train():
     )
     
     # dataloader
-    trainloader, dataset = get_loader(root_folder = '../../data/flickr8k/images',
-                                      annotation_file = '../../data/flickr8k/captions.txt',
-                                      transform = transform)
+    trainloader, dataset = get_loader(root_folder = './data/flickr8k/Images',
+                                      annotation_file = './data/flickr8k/captions.txt',
+                                      transform = transform,
+                                      num_workers=2)
     
     if torch.cuda.is_available():
         device = torch.device('cuda')
@@ -29,8 +30,9 @@ def train():
     else:
         device = torch.device('cpu')
         
-    # load_models = False
-    # save_model = True
+    load_models = False
+    save_model = False
+    train_CNN = False
     
     # Hyperparameter
     embed_size = 256
@@ -42,17 +44,18 @@ def train():
     
     # Initialize Model
     model = CNNtoRNN(embed_size, hidden_size, vocab_size, num_layers).to(device)
-    criterion = nn.CrossEntropyLoss(ignore_index=dataset.vocab.stoi['<pad>'])
+    criterion = nn.CrossEntropyLoss(ignore_index=dataset.vocab.stoi["<PAD>"])
     optimizer = optim.Adam(model.parameters(), lr=lrate)
     model.train()
     
     for epoch in range(num_epochs):
+        
         for idx, (imgs, captions) in enumerate(trainloader):
             imgs = imgs.to(device)
             captions = captions.to(device)
             
-            output = model(imgs, captions[:-1])
-            loss = criterion(outputs.reshape(-1, outputs.shape[2]), caption.reshape(-1))
+            outputs = model(imgs, captions[:-1])
+            loss = criterion(outputs.reshape(-1, outputs.shape[2]), captions.reshape(-1))
             
             optimizer.zero_grad()
             loss.backward()

@@ -163,13 +163,13 @@ def get_loader(
     loader = DataLoader(
         dataset=dataset,
         batch_size=batch_size,
-        shuffle=shuffle,
         num_workers=num_workers,
+        shuffle=shuffle,
         pin_memory=pin_memory,
         collate_fn=MyCollate(pad_idx=pad_idx)
     )
     
-    return loader
+    return loader, dataset
 
 
 def main():
