@@ -147,3 +147,4 @@ wandb/
 .env
 .autoenv
 /lightning_logs/
+kaggle.json
