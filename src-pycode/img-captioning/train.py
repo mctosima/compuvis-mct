@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torchvision.transforms as transforms
 from loader import get_loader
+from utils import save_checkpoint, load_checkpoint, print_examples
 from model import CNNtoRNN
 import wandb
 
@@ -35,6 +36,10 @@ def train():
         
     print(f'Train Using {device}')
     
+    load_model = False
+    save_model = False
+    train_CNN = False
+    
     # Hyperparameter
     embed_size = 256
     hidden_size = 256
@@ -47,9 +52,28 @@ def train():
     model = CNNtoRNN(embed_size, hidden_size, vocab_size, num_layers).to(device)
     criterion = nn.CrossEntropyLoss(ignore_index=dataset.vocab.stoi["<PAD>"])
     optimizer = optim.Adam(model.parameters(), lr=lrate)
+    
+    for name, param in model.encoderCNN.inception.named_parameters():
+        if "fc.weight" in name or "fc.bias" in name:
+            param.requires_grad = True
+        else:
+            param.requires_grad = train_CNN
+            
+    if load_model:
+        step = load_checkpoint(torch.load("my_checkpoint.pt"), model, optimizer)
+    
+    
     model.train()
     
     for epoch in range(num_epochs):
+        
+        if save_model:
+            checkpoint = {
+                "state_dict": model.state_dict(),
+                "optimizer": optimizer.state_dict(),
+                "step": step,
+            }
+            save_checkpoint(checkpoint)
         
         for idx, (imgs, captions) in enumerate(trainloader):
             imgs = imgs.to(device)

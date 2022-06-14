@@ -1,0 +1,40 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /datamodule: flickr8k.yaml
+  - override /model: flickr8k_captioning.yaml
+  - override /callbacks: default.yaml
+  - override /logger: null
+  - override /trainer: default.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+# name of the run determines folder name in logs
+name: "imgcaption_net"
+
+seed: 609
+
+trainer:
+  gpus: 1
+  min_epochs: 2
+  max_epochs: 5
+
+datamodule:
+  batch_size: 32
+
+logger:
+  wandb:
+    tags: ["mnist", "${name}"]
+
+callbacks:
+  model_checkpoint:
+    monitor: "train/loss" # name of the logged metric which determines when model is improving
+    mode: "min" # "max" means higher metric value is better, can be also "min"
+
+  early_stopping:
+    monitor: "train/loss" # name of the logged metric which determines when model is improving
+    mode: "min" # "max" means higher metric value is better, can be also "min"

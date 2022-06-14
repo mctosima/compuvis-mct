@@ -1,0 +1,9 @@
+_target_: src.models.imgcaption_module.Flickr8KLitModule
+lr: 0.001
+
+net:
+  _target_: src.models.components.imgcaption_net.CNNtoRNN
+  embed_size: 256
+  hidden_size: 256
+  vocab_size: 2994
+  num_layers: 1

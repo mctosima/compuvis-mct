@@ -1,0 +1,6 @@
+_target_: src.datamodules.flickr8k_datamodule.Flickr8KDataModule
+
+data_dir: ${data_dir}flickr8k # data_dir is specified in config.yaml
+batch_size: 32
+num_workers: 4
+pin_memory: True
